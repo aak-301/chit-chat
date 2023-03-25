@@ -9,6 +9,7 @@ class ChatScreen extends StatelessWidget {
       body: ListView.builder(
         itemBuilder: (context, index) => Container(
           padding: EdgeInsets.all(8),
+          child: Text("data"),
         ),
         itemCount: 10,
       ),
