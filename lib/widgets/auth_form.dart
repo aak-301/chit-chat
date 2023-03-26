@@ -9,14 +9,20 @@ class AuthForm extends StatefulWidget {
 
 class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
+  var _isLogin = false;
   String userEmail = "";
   String userPassword = "";
   String userName = "";
 
   void _trySubmit() {
     final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+
     if (isValid) {
       _formKey.currentState!.save();
+      print(userEmail);
+      print(userName);
+      print(userPassword);
     }
   }
 
@@ -34,6 +40,7 @@ class _AuthFormState extends State<AuthForm> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextFormField(
+                    key: const ValueKey('email'),
                     validator: (value) {
                       if (value!.isEmpty || !value.contains('@')) {
                         return 'Please enter a valid emial address';
@@ -47,19 +54,22 @@ class _AuthFormState extends State<AuthForm> {
                       userEmail = newValue!;
                     },
                   ),
+                  if (!_isLogin)
+                    TextFormField(
+                      key: const ValueKey('username'),
+                      validator: ((value) {
+                        if (value!.isEmpty || value.length < 4) {
+                          return 'Username should be at least 4 charecter long';
+                        }
+                        return null;
+                      }),
+                      decoration: const InputDecoration(labelText: 'Username'),
+                      onSaved: (newValue) {
+                        userName = newValue!;
+                      },
+                    ),
                   TextFormField(
-                    validator: ((value) {
-                      if (value!.isEmpty || value.length < 4) {
-                        return 'Username should be at least 4 charecter long';
-                      }
-                      return null;
-                    }),
-                    decoration: const InputDecoration(labelText: 'Username'),
-                    onSaved: (newValue) {
-                      userName = newValue!;
-                    },
-                  ),
-                  TextFormField(
+                    key: const ValueKey('password'),
                     validator: ((value) {
                       if (value!.isEmpty || value.length < 7) {
                         return 'Password must be at least 7 charecter long';
@@ -81,13 +91,19 @@ class _AuthFormState extends State<AuthForm> {
                         ),
                       ),
                     ),
-                    onPressed: () {},
-                    child: const Text('Login'),
+                    onPressed: _trySubmit,
+                    child: Text(_isLogin ? 'Login' : 'Signup'),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        _isLogin = !_isLogin;
+                      });
+                    },
                     child: Text(
-                      'Create new accout',
+                      _isLogin
+                          ? 'Create new accout'
+                          : 'I already have an account',
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                   ),
