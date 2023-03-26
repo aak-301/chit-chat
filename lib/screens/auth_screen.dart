@@ -1,4 +1,4 @@
-import 'package:chitchat/widgets/auth_form.dart';
+import 'package:chitchat/widgets/auth/auth_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
