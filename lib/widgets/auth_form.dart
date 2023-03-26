@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
-  const AuthForm({super.key, required this.getAuthFormData});
+  const AuthForm({
+    super.key,
+    required this.getAuthFormData,
+    required this.isLoading,
+  });
 
   final Function getAuthFormData;
+  final bool isLoading;
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -89,30 +94,34 @@ class _AuthFormState extends State<AuthForm> {
                     },
                   ),
                   const SizedBox(height: 20),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
+                  if (widget.isLoading) CircularProgressIndicator(),
+                  if (!widget.isLoading)
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
                         ),
                       ),
+                      onPressed: _trySubmit,
+                      child: Text(_isLogin ? 'Login' : 'Signup'),
                     ),
-                    onPressed: _trySubmit,
-                    child: Text(_isLogin ? 'Login' : 'Signup'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _isLogin = !_isLogin;
-                      });
-                    },
-                    child: Text(
-                      _isLogin
-                          ? 'Create new accout'
-                          : 'I already have an account',
-                      style: TextStyle(color: Theme.of(context).primaryColor),
+                  if (!widget.isLoading)
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _isLogin = !_isLogin;
+                        });
+                      },
+                      child: Text(
+                        _isLogin
+                            ? 'Create new accout'
+                            : 'I already have an account',
+                        style: TextStyle(color: Theme.of(context).primaryColor),
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
