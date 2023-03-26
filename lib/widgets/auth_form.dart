@@ -8,6 +8,18 @@ class AuthForm extends StatefulWidget {
 }
 
 class _AuthFormState extends State<AuthForm> {
+  final _formKey = GlobalKey<FormState>();
+  String userEmail = "";
+  String userPassword = "";
+  String userName = "";
+
+  void _trySubmit() {
+    final isValid = _formKey.currentState!.validate();
+    if (isValid) {
+      _formKey.currentState!.save();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -17,6 +29,7 @@ class _AuthFormState extends State<AuthForm> {
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Form(
+              key: _formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -30,6 +43,9 @@ class _AuthFormState extends State<AuthForm> {
                     keyboardType: TextInputType.emailAddress,
                     decoration:
                         const InputDecoration(labelText: 'Email Address'),
+                    onSaved: (newValue) {
+                      userEmail = newValue!;
+                    },
                   ),
                   TextFormField(
                     validator: ((value) {
@@ -39,6 +55,9 @@ class _AuthFormState extends State<AuthForm> {
                       return null;
                     }),
                     decoration: const InputDecoration(labelText: 'Username'),
+                    onSaved: (newValue) {
+                      userName = newValue!;
+                    },
                   ),
                   TextFormField(
                     validator: ((value) {
@@ -49,6 +68,9 @@ class _AuthFormState extends State<AuthForm> {
                     }),
                     decoration: const InputDecoration(labelText: 'Passowrd'),
                     obscureText: true,
+                    onSaved: (newValue) {
+                      userPassword = newValue!;
+                    },
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
