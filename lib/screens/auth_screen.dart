@@ -1,4 +1,5 @@
 import 'package:chitchat/widgets/auth_form.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,13 @@ class _AuthentictionScreenState extends State<AuthentictionScreen> {
           email: email,
           password: password,
         );
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(authres.user!.uid)
+            .set({
+          'username': userName,
+          'emal': email,
+        });
       }
     } on FirebaseAuthException catch (err) {
       String message = 'An error occured, please check your credentials';
