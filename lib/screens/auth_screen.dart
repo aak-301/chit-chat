@@ -1,4 +1,5 @@
 import 'package:chitchat/widgets/auth_form.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthentictionScreen extends StatefulWidget {
@@ -9,15 +10,55 @@ class AuthentictionScreen extends StatefulWidget {
 }
 
 class _AuthentictionScreenState extends State<AuthentictionScreen> {
+  final _auth = FirebaseAuth.instance;
   void _submitAuthForm(
     String email,
     String userName,
     String password,
     bool isLogin,
-  ) {
-    print(email);
-    print(userName);
-    print(password);
+    BuildContext ctx,
+  ) async {
+    UserCredential authres;
+//     try {
+//   final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+//     email: email,
+//     password: password,
+//   );
+// } on FirebaseAuthException catch (e) {
+//   if (e.code == 'weak-password') {
+//     print('The password provided is too weak.');
+//   } else if (e.code == 'email-already-in-use') {
+//     print('The account already exists for that email.');
+//   }
+// } catch (e) {
+//   print(e);
+// }
+    try {
+      if (isLogin) {
+        authres = await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+      } else {
+        authres = await _auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+      }
+    } on FirebaseAuthException catch (err) {
+      String message = 'An error occured, please check your credentials';
+      if (err.message != null) {
+        message = err.message!;
+      }
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Theme.of(ctx).errorColor,
+        ),
+      );
+    } catch (err) {
+      print(err);
+    }
   }
 
   @override

@@ -22,7 +22,13 @@ class _AuthFormState extends State<AuthForm> {
 
     if (isValid) {
       _formKey.currentState!.save();
-      widget.getAuthFormData(userEmail,userName,userPassword,_isLogin);
+      widget.getAuthFormData(
+        userEmail.trim(),
+        userName.trim(),
+        userPassword.trim(),
+        _isLogin,
+        context,
+      );
     }
   }
 
