@@ -1,4 +1,6 @@
+import 'package:chitchat/widgets/chat/message_bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Messages extends StatelessWidget {
@@ -24,7 +26,12 @@ class Messages extends StatelessWidget {
         return ListView.builder(
           reverse: true,
           itemBuilder: ((context, index) {
-            return Text(chatDoc[index]['text']);
+            return MessageBubble(
+              uniquekey: ValueKey(chatDoc[index].id),
+              message: chatDoc[index]['text'],
+              isMe: chatDoc[index]['userId'] ==
+                  FirebaseAuth.instance.currentUser!.uid,
+            );
           }),
           itemCount: chatDoc.length,
         );
