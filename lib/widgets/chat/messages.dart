@@ -10,12 +10,13 @@ class Messages extends StatelessWidget {
       stream: FirebaseFirestore.instance.collection('chat').snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
         final chatDoc = snapshot.data!.docs;
         return ListView.builder(
+          reverse: true,
           itemBuilder: ((context, index) {
             return Text(chatDoc[index]['text']);
           }),
