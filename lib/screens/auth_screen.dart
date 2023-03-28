@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:chitchat/widgets/auth/auth_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class AuthentictionScreen extends StatefulWidget {
@@ -19,6 +22,7 @@ class _AuthentictionScreenState extends State<AuthentictionScreen> {
     String userName,
     String password,
     bool isLogin,
+    File userImage,
     BuildContext ctx,
   ) async {
     UserCredential authres;
@@ -36,12 +40,23 @@ class _AuthentictionScreenState extends State<AuthentictionScreen> {
           email: email,
           password: password,
         );
+
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child('user_image')
+            .child(authres.user!.uid + '.jpg');
+
+        await ref.putFile(userImage).whenComplete(() => null);
+
+        String imageUrl = await ref.getDownloadURL();
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc(authres.user!.uid)
             .set({
           'username': userName,
           'emal': email,
+          'url': imageUrl,
         });
       }
     } on FirebaseAuthException catch (err) {
