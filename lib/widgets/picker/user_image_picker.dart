@@ -62,9 +62,11 @@ class _UserImagePickerState extends State<UserImagePicker> {
     XFile? image;
     final ImagePicker _picker = ImagePicker();
     if (selectFromGallery) {
-      image = await _picker.pickImage(source: ImageSource.gallery);
+      image = await _picker.pickImage(
+          source: ImageSource.gallery, imageQuality: 40, maxWidth: 150);
     } else {
-      image = await _picker.pickImage(source: ImageSource.camera);
+      image = await _picker.pickImage(
+          source: ImageSource.camera, imageQuality: 40, maxWidth: 150);
     }
     setState(() {
       _pickedImage = File(image!.path);
