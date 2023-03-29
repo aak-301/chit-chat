@@ -18,6 +18,7 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -27,7 +28,9 @@ class MessageBubble extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: isMe ? Colors.grey[300] : Theme.of(context).accentColor,
+                color: isMe
+                    ? Colors.grey[300]
+                    : Theme.of(context).accentColor,
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(12),
                   topRight: const Radius.circular(12),
@@ -49,8 +52,9 @@ class MessageBubble extends StatelessWidget {
                 horizontal: 8,
               ),
               child: Column(
-                crossAxisAlignment:
-                    isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                crossAxisAlignment: isMe
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
                 children: [
                   Text(
                     userName,
@@ -77,8 +81,32 @@ class MessageBubble extends StatelessWidget {
           top: 0,
           right: isMe ? 120 : null,
           left: isMe ? null : 120,
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(userImage),
+          child: GestureDetector(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                    return 
+                    Container(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              child: Image.network(userImage),
+                              height: 250,
+                              width: 300,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                },
+              );
+            },
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(userImage),
+            ),
           ),
         ),
       ],
