@@ -48,7 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter Chat'),
+        title: const Text('Chit Chat'),
         actions: [
           DropdownButton(
             underline: Container(),
