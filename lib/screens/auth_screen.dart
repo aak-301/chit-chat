@@ -22,7 +22,7 @@ class _AuthentictionScreenState extends State<AuthentictionScreen> {
     String userName,
     String password,
     bool isLogin,
-    File userImage,
+    File? userImage,
     BuildContext ctx,
   ) async {
     UserCredential authres;
@@ -46,7 +46,7 @@ class _AuthentictionScreenState extends State<AuthentictionScreen> {
             .child('user_image')
             .child(authres.user!.uid + '.jpg');
 
-        await ref.putFile(userImage).whenComplete(() => null);
+        await ref.putFile(userImage!).whenComplete(() => null);
 
         String imageUrl = await ref.getDownloadURL();
 
