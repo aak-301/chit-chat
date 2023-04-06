@@ -2,15 +2,21 @@
 
 A new Flutter project.
 
-## Getting Started
+## About
 
-This project is a starting point for a Flutter application.
+Chat application powered by Flutter and Firebase, where 
+  - a user can send and receive messages.
+  - Create his/her account.
+  - Upload his/her photo and view it.
 
-A few resources to get you started if this is your first Flutter project:
+## Demo
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+https://user-images.githubusercontent.com/76422079/230142206-aaa14672-18b4-49bd-ad65-1b93aab2a138.mp4
+
+
+<br />
+
+https://user-images.githubusercontent.com/76422079/230142220-bdbde755-d510-4570-b6a9-11b319130056.mp4
+
